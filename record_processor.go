@@ -5,7 +5,7 @@ import (
 	"github.com/pkritiotis/outbox/internal/time"
 )
 
-//defaultRecordProcessor checks and dispatches new messages to be sent
+// defaultRecordProcessor checks and dispatches new messages to be sent
 type defaultRecordProcessor struct {
 	messageBroker MessageBroker
 	store         Store
@@ -14,7 +14,7 @@ type defaultRecordProcessor struct {
 	retrialPolicy RetrialPolicy
 }
 
-//newProcessor constructs a new defaultRecordProcessor
+// newProcessor constructs a new defaultRecordProcessor
 func newProcessor(store Store, messageBroker MessageBroker, machineID string, retrialPolicy RetrialPolicy) *defaultRecordProcessor {
 	return &defaultRecordProcessor{
 		messageBroker: messageBroker,
@@ -25,7 +25,7 @@ func newProcessor(store Store, messageBroker MessageBroker, machineID string, re
 	}
 }
 
-//ProcessRecords locks unprocessed messages, tries to deliver them and then unlocks them
+// ProcessRecords locks unprocessed messages, tries to deliver them and then unlocks them
 func (d defaultRecordProcessor) ProcessRecords() error {
 	err := d.lockUnprocessedEntities()
 	defer d.store.ClearLocksByLockID(d.machineID)

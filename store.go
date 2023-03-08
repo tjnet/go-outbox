@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-//Record represents the record that is stored and retrieved from the database
+// Record represents the record that is stored and retrieved from the database
 type Record struct {
 	ID               uuid.UUID
 	Message          Message
@@ -15,12 +15,12 @@ type Record struct {
 	LockID           *string
 	LockedOn         *time.Time
 	ProcessedOn      *time.Time
-	NumberOfAttempts int
+	NumberOfAttempts uint
 	LastAttemptOn    *time.Time
 	Error            *string
 }
 
-//RecordState is the State of the Record
+// RecordState is the State of the Record
 type RecordState int
 
 const (
@@ -32,7 +32,7 @@ const (
 	MaxAttemptsReached
 )
 
-//Store is the interface that should be implemented by SQL-like database drivers to support the outbox functionality
+// Store is the interface that should be implemented by SQL-like database drivers to support the outbox functionality
 type Store interface {
 	//AddRecordTx stores the message within the provided database transaction
 	AddRecordTx(record Record, tx *sql.Tx) error

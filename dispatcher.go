@@ -20,7 +20,7 @@ type cleaner interface {
 // RetrialPolicy contains the retrial settings
 type RetrialPolicy struct {
 	MaxSendAttemptsEnabled bool
-	MaxSendAttempts        int
+	MaxSendAttempts        uint
 }
 
 // DispatcherSettings defines the set of configurations for the dispatcher
@@ -33,7 +33,7 @@ type DispatcherSettings struct {
 	MessagesRetentionDuration time.Duration
 }
 
-//Dispatcher initializes and runs the outbox dispatcher
+// Dispatcher initializes and runs the outbox dispatcher
 type Dispatcher struct {
 	recordProcessor processor
 	recordUnlocker  unlocker
@@ -41,7 +41,7 @@ type Dispatcher struct {
 	settings        DispatcherSettings
 }
 
-//NewDispatcher constructor
+// NewDispatcher constructor
 func NewDispatcher(store Store, broker MessageBroker, settings DispatcherSettings, machineID string) *Dispatcher {
 	return &Dispatcher{
 		recordProcessor: newProcessor(
@@ -62,8 +62,8 @@ func NewDispatcher(store Store, broker MessageBroker, settings DispatcherSetting
 	}
 }
 
-//Run periodically checks for new outbox messages from the Store, sends the messages through the MessageBroker
-//and updates the message status accordingly
+// Run periodically checks for new outbox messages from the Store, sends the messages through the MessageBroker
+// and updates the message status accordingly
 func (d Dispatcher) Run(errChan chan<- error, doneChan <-chan struct{}) {
 	doneProc := make(chan struct{}, 1)
 	doneUnlock := make(chan struct{}, 1)
